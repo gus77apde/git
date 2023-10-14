@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GGcommerce - Cadastro</title>
+    <style>
+        body {
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            transition: background-color 0.5s ease;
+        }
+
+        h1 {
+            font-size: 48px;
+            color: var(--text-color);
+            animation: colorChange 5s infinite linear;
+        }
+
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .input {
+            padding: 10px;
+            margin-bottom: 10px;
+            width: 300px;
+            font-size: 18px;
+        }
+
+        .submit-button {
+            background-color: #fff;
+            color: #000;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .login-link {
+            font-size: 12px;
+            color: var(--text-color);
+            text-decoration: none;
+            margin-bottom: 10px;
+        }
+
+        .theme-selector {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .theme-selector button {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+        }
+
+        .theme-selector button.moon {
+            background-color: black;
+        }
+
+        .theme-selector button.sun {
+            background-color: yellow;
+        }
+
+        :root {
+            --bg-color: white;
+            --text-color: black;
+        }
+
+        .dark {
+            --bg-color: black;
+            --text-color: white;
+        }
+
+        @keyframes colorChange {
+            0% { color: red; }
+            25% { color: blue; }
+            50% { color: green; }
+            75% { color: yellow; }
+            100% { color: orange; }
+        }
+    </style>
+</head>
+<body>
+    <h1>GG-commerce</h1>
+
+    <div class="input-container">
+        <input type="text" id="usuario" class="input" placeholder="Nome de usuário">
+        <input type="password" id="senha" class="input" placeholder="Senha">
+        <input type="text" id="cpf" class="input" placeholder="CPF">
+        <button class="submit-button" onclick="cadastrar()">Cadastrar</button>
+        <a href="login.html" class="login-link">Já possuo uma conta</a>
+    </div>
+
+    <div class="theme-selector">
+        <button class="moon" onclick="setDarkTheme()"></button>
+        <button class="sun" onclick="setLightTheme()"></button>
+    </div>
+
+    <script>
+        function cadastrar() {
+            const usuario = document.getElementById('usuario').value;
+            const senha = document.getElementById('senha').value;
+            const cpf = document.getElementById('cpf').value;
+
+            // Verifica se o CPF já está cadastrado
+            if (verificarCPF(cpf)) {
+                document.getElementById('error-message').innerText = "CPF utilizado";
+            } else {
+                // Salva os dados em algum lugar (pode ser no localStorage, em um servidor, etc.)
+                // Exemplo de armazenamento no localStorage:
+                const cadastro = { usuario, senha, cpf };
+                localStorage.setItem('cadastro', JSON.stringify(cadastro));
+
+                // Redireciona para a tela de login
+                window.location.href = "login.html";
+            }
+        }
+
+        function verificarCPF(cpf) {
+            // Verifica se o CPF já está cadastrado
+            // Aqui você pode implementar a lógica de verificação do CPF no seu sistema
+            // Por exemplo, verificar em um banco de dados se o CPF já existe
+            // Neste exemplo, vamos apenas verificar se o CPF é "12345678900"
+            return cpf === "12345678900";
+        }
+
+        function setDarkTheme() {
+            document.documentElement.classList.add('dark');
+        }
+
+        function setLightTheme() {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+</body>
+</html>
