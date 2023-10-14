@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>GGcommerce</title>
+    <title>GG-commerce</title>
     <style>
         body {
             background-color: var(--bg-color);
@@ -14,32 +14,45 @@
             height: 100vh;
             transition: background-color 0.5s ease;
         }
+
         h1 {
             font-size: 48px;
             color: var(--text-color);
-            animation: colorChange 5s infinite linear;
         }
+
         .logo {
             font-size: 72px;
             color: var(--text-color);
-            animation: colorSpin 5s infinite linear;
+            margin-bottom: 20px;
         }
+
         .input-container {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            margin-top: 20px;
         }
+
         .input {
             padding: 10px;
             margin-bottom: 10px;
             width: 300px;
             font-size: 18px;
-            color: var(--text-color);
-            background-color: var(--input-bg-color);
         }
-        .cadastro-button, .login-button {
+
+        .show-password {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            margin-bottom: 10px;
+            width: 300px;
+        }
+
+        .password-checkbox {
+            margin-left: 5px;
+        }
+
+        .submit-button {
             background-color: #fff;
             color: #000;
             padding: 10px 20px;
@@ -48,21 +61,7 @@
             font-size: 18px;
             margin-bottom: 10px;
         }
-        .error-message {
-            color: red;
-            margin-top: 10px;
-        }
-        .refresh-button {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background-color: #fff;
-            color: #000;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            font-size: 18px;
-        }
+
         .theme-selector {
             position: fixed;
             bottom: 10px;
@@ -70,6 +69,7 @@
             display: flex;
             gap: 10px;
         }
+
         .theme-selector button {
             width: 30px;
             height: 30px;
@@ -77,75 +77,73 @@
             border: none;
             cursor: pointer;
         }
-        .theme-selector button.moon {
+
+        .theme-selector button.dark {
             background-color: black;
         }
-        .theme-selector button.sun {
-            background-color: yellow;
+
+        .theme-selector button.light {
+            background-color: white;
         }
+
         :root {
             --bg-color: white;
             --text-color: black;
-            --input-bg-color: white;
         }
+
         .dark {
             --bg-color: black;
             --text-color: white;
-            --input-bg-color: #444;
-        }
-        @keyframes colorChange {
-            0% { color: red; }
-            25% { color: blue; }
-            50% { color: green; }
-            75% { color: yellow; }
-            100% { color: orange; }
-        }
-        @keyframes colorSpin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
-    <h1><span class="logo">GG</span>commerce</h1>
+    <h1 class="logo">GG-commerce</h1>
+
     <div class="input-container">
         <input type="text" id="usuario" class="input" placeholder="Nome de usuário">
         <input type="password" id="senha" class="input" placeholder="Senha">
-        <button class="cadastro-button" onclick="showCadastro()">Cadastrar</button>
-        <button class="login-button" onclick="login()">Login</button>
-        <p class="error-message" id="error-message"></p>
+        <div class="show-password">
+            <label for="senha">Mostrar senha</label>
+            <input type="checkbox" class="password-checkbox" onclick="togglePasswordVisibility()">
+        </div>
+        <button class="submit-button" onclick="login()">Login</button>
+        <button class="submit-button" onclick="cadastro()">Cadastrar</button>
     </div>
+
     <div class="theme-selector">
-        <button class="moon" onclick="setDarkTheme()"></button>
-        <button class="sun" onclick="setLightTheme()"></button>
+        <button class="dark" onclick="setDarkTheme()"></button>
+        <button class="light" onclick="setLightTheme()"></button>
     </div>
-    <button class="refresh-button">GG</button>
+
     <script>
-        const refreshButton = document.querySelector('.refresh-button');
-        refreshButton.addEventListener('click', function() {
-            location.reload();
-        });
-        function showCadastro() {
-            window.location.href = "cadastro.html";
-        }
         function login() {
             const usuario = document.getElementById('usuario').value;
             const senha = document.getElementById('senha').value;
 
-            // Verifica se as informações de login estão corretas
-            const cadastro = JSON.parse(localStorage.getItem('cadastro'));
-            if (cadastro && cadastro.usuario === usuario && cadastro.senha === senha) {
-                // Redireciona para a tela de boas-vindas
+            // Lógica de verificação do login aqui
+            // Exemplo simples apenas para demonstração
+            if (usuario === "admin" && senha === "123456") {
                 window.location.href = "boas-vindas.html";
             } else {
-                const errorMessage = document.getElementById('error-message');
-                errorMessage.innerText = "Usuário ou senha incorretos";
-                errorMessage.style.color = "red";
+                alert("Usuário ou senha incorretos");
             }
         }
+
+        function cadastro() {
+            // Lógica para redirecionar para a página de cadastro
+            window.location.href = "cadastro.html";
+        }
+
+        function togglePasswordVisibility() {
+            const senhaInput = document.getElementById('senha');
+            senhaInput.type = senhaInput.type === 'password' ? 'text' : 'password';
+        }
+
         function setDarkTheme() {
             document.documentElement.classList.add('dark');
         }
+
         function setLightTheme() {
             document.documentElement.classList.remove('dark');
         }
